@@ -1,0 +1,11 @@
+<asl-google-signin-button *ngIf='!user' type='icon' size='medium' data-text='Sign in with Google'></asl-google-signin-button>
+
+<!--test out login mechanism-->
+<div *ngIf='user'>
+    <button (click)='signOut()'>Sign out</button>  
+
+    Hi, {{user.name}}
+
+    <img src='{{user.photoUrl}}'/>
+</div>
+
