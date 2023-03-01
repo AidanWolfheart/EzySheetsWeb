@@ -1,6 +1,8 @@
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { GoogleAuth } from '../models/googleAuth.model';
+import { ChatService } from '../services/chat.service';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +14,7 @@ export class LoginComponent implements OnInit{
   loggedIn: boolean;
 
   constructor(private authService: SocialAuthService,
+              private chatService: ChatService,
               private router: Router) { }
 
   ngOnInit() {
@@ -19,7 +22,15 @@ export class LoginComponent implements OnInit{
       this.user = user;
       this.loggedIn = (user != null);
 
-      console.log(this.user.idToken);
+      let googleAuth: GoogleAuth = {
+        token: user.idToken
+      };
+
+      this.chatService.send(googleAuth).subscribe(
+        (data) => {
+          console.log("got data: ", data.token)
+        }
+      )
     });
   }
 

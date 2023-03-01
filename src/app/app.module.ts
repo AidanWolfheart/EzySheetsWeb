@@ -1,6 +1,7 @@
 import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,7 +17,8 @@ import { GOOGLE_API_CLIENT_ID } from './shared/google-api-client-id';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SocialLoginModule
+    SocialLoginModule,
+    HttpClientModule
   ],
   providers: [
     {
