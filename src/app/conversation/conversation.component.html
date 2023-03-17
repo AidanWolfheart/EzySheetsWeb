@@ -1,0 +1,16 @@
+<form [formGroup]="conversation" (ngSubmit)="send(conversation)">
+    <div>
+        <label>
+            Prompt:
+        </label>
+        <input formControlName="prompt">
+    </div>
+    <div>
+        <label>
+            Response:
+        </label>
+        &nbsp;
+        <textarea class="response" formControlName="response"></textarea>
+    </div>
+    <button type="submit">Send</button>
+  </form>
