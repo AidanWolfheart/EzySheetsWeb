@@ -23,7 +23,8 @@ export class ConversationComponent implements OnInit{
   }
 
   send(conversation: FormGroup) {
-    this.chatService.converse(conversation.value.prompt).subscribe(
+    conversation.patchValue({'response': 'Generating...'});
+    this.chatService.converse(conversation.value.prompt).then(
       response =>
       {
         conversation.patchValue({'response': response});

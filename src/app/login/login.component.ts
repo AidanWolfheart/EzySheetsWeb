@@ -18,7 +18,9 @@ export class LoginComponent implements OnInit{
 
   ngOnInit() {
     this.chatService.authorize().then( response =>
-     location.href = response.url
+      {
+        location.href = response.url;
+      }
     )
   }
 

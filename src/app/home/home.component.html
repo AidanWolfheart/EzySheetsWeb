@@ -1,4 +1,7 @@
 <p>home works!</p>
+<div *ngIf='!signedIn'>
+    <a routerLink="/login"><button class="btn btn-success pull-right">Login</button></a>
+</div>
 <div *ngIf='signedIn'>
     <app-conversation></app-conversation>
 </div>

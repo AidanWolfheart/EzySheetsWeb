@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ChatService } from '../services/chat.service';
 
 @Component({
@@ -10,17 +11,18 @@ export class HomeComponent{
 
   signedIn : boolean = false;
   
-  constructor(private chatService: ChatService) { }
+  constructor(private chatService: ChatService,
+    private router: Router) { }
 
   ngOnInit() {
-    this.chatService.isSignedIn().subscribe(response => 
+    this.chatService.isSignedIn().then(response => 
       {
-console.log(response);
-
-        if (response){
+        if (response.creds == true){
         this.signedIn = true;
-      }else{
+        }else{
         this.signedIn = false;
-      }});
+        }
+      }
+      );
   }
 }
