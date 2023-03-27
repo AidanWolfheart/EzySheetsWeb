@@ -12,6 +12,7 @@ export class ConversationComponent implements OnInit{
   constructor(private chatService: ChatService) { }
 
   conversation: FormGroup;
+  messages: any[] = [];
 
   ngOnInit() {
     this.conversation = new FormGroup({
@@ -22,13 +23,42 @@ export class ConversationComponent implements OnInit{
     this.conversation.controls['response'].disable();
   }
 
-  send(conversation: FormGroup) {
-    conversation.patchValue({'response': 'Generating...'});
-    this.chatService.converse(conversation.value.prompt).then(
+  send(conversation: any) {
+    this.handleUserRequest(conversation.message, false);
+    this.handleAIResponse("Thinking..", true)
+
+    this.chatService.converse(conversation.message).then(
       response =>
       {
-        conversation.patchValue({'response': response});
+        this.messages.pop()
+        this.handleAIResponse(response, true)
       }
     );
+  }
+
+  handleUserRequest(response: any, isReply: boolean) {
+    console.log(`My response: ${response}`)
+    var payload = {
+      text: response,
+      date: new Date(),
+      reply: isReply,
+      type: 'text',
+      name: "User's Name",
+      // avatar: 'https://i.gifer.com/no.gif',
+    };
+    this.messages.push(payload);
+  }
+
+  handleAIResponse(response: any, isReply: boolean) {
+    console.log(`My response: ${response}`)
+    var payload = {
+      text: response,
+      date: new Date(),
+      reply: isReply,
+      type: 'text',
+      name: 'Google Sheet AI',
+      // avatar: 'https://i.gifer.com/no.gif',
+    };
+    this.messages.push(payload);
   }
 }
