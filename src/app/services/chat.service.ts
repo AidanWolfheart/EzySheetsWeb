@@ -56,6 +56,21 @@ export class ChatService {
         }
       ).then(value => value.json());
   }
+  sendActiveScriptId(scriptID: String) : Promise<any>{
+    var body = { userid:'1', script_id: scriptID };
+
+    return fetch(
+      'http://127.0.0.1:5000/chat/setActiveScriptId', // the url you are trying to access
+      {
+        method: 'POST', // GET, POST, PUT, DELETE
+        credentials: 'include',
+        body: JSON.stringify(body),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      },
+    ).then(value => value.json());
+  }
 
   // isSignedIn(): Observable<any>{
   //   return this.http.get('http://127.0.0.1:5000/chat/signed-in').pipe();

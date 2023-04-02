@@ -1,3 +1,17 @@
+
+<p><Strong>Active script ID: </Strong> {{activeScriptId}}</p>
+
+<form [formGroup]="activeScriptIdForm" (ngSubmit)="onSet()">
+    <input type="text" formControlName="scriptID" />
+<!--    <input nbInput/>-->
+    <button type="submit">Set Script ID</button>
+</form>
+
+<br>
+<br>
+<br>
+<br>
+
 <nb-chat title="Ezy Sheets Chat Bot">
     <nb-chat-message *ngFor="let msg of messages"
                      [type]="msg.type"

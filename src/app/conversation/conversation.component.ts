@@ -13,6 +13,8 @@ export class ConversationComponent implements OnInit{
 
   conversation: FormGroup;
   messages: any[] = [];
+  activeScriptIdForm: FormGroup;
+  activeScriptId: String;
 
   ngOnInit() {
     this.conversation = new FormGroup({
@@ -20,7 +22,12 @@ export class ConversationComponent implements OnInit{
       response: new FormControl('')
     });
 
+    this.activeScriptIdForm = new FormGroup({
+      scriptID: new FormControl('')
+    });
+
     this.conversation.controls['response'].disable();
+    this.activeScriptId = "No active Scripts right now";
   }
 
   send(conversation: any) {
@@ -60,5 +67,12 @@ export class ConversationComponent implements OnInit{
       // avatar: 'https://i.gifer.com/no.gif',
     };
     this.messages.push(payload);
+  }
+
+  get registerUsername() { return this.activeScriptIdForm.get('scriptID'); }
+
+  onSet() {
+    this.activeScriptId = this.registerUsername?.value;
+    this.chatService.sendActiveScriptId(this.activeScriptId);
   }
 }

@@ -9,7 +9,7 @@ import { ConversationComponent } from './conversation/conversation.component';
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbChatModule } from '@nebular/theme';
+import {NbThemeModule, NbLayoutModule, NbChatModule, NbInputModule} from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 
@@ -29,7 +29,8 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     NbThemeModule.forRoot({ name: 'default' }),
     NbLayoutModule,
     NbEvaIconsModule,
-    NbChatModule
+    NbChatModule,
+    NbInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
