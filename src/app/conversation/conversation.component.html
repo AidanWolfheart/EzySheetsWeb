@@ -1,7 +1,7 @@
 
 <p><Strong>Active script ID: </Strong> {{activeScriptId}}</p>
 
-<form [formGroup]="activeScriptIdForm" (ngSubmit)="onSet()">
+<form [formGroup]="activeScriptIdForm" (ngSubmit)="setActiveScriptId()">
     <input type="text" formControlName="scriptID" />
 <!--    <input nbInput/>-->
     <button type="submit">Set Script ID</button>

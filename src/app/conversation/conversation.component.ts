@@ -28,6 +28,12 @@ export class ConversationComponent implements OnInit{
 
     this.conversation.controls['response'].disable();
     this.activeScriptId = "No active Scripts right now";
+
+    var scriptId = this.getActiveScriptId();
+
+    if(scriptId !== ''){
+      this.activeScriptId = scriptId;
+    }
   }
 
   send(conversation: any) {
@@ -71,7 +77,16 @@ export class ConversationComponent implements OnInit{
 
   get registerUsername() { return this.activeScriptIdForm.get('scriptID'); }
 
-  onSet() {
+  getActiveScriptId() : any {
+    this.chatService.getActiveScriptId().then(
+      response=>
+      {
+        return response;
+      }
+    );
+  }
+
+  setActiveScriptId() {
     this.activeScriptId = this.registerUsername?.value;
     this.chatService.sendActiveScriptId(this.activeScriptId);
   }

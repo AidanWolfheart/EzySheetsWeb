@@ -3,35 +3,24 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { catchError, from, Observable, throwError } from 'rxjs';
 import { GoogleAuth } from '../models/googleAuth.model';
 import { ChatResponse } from '../models/chatResponse.model';
-
-const httpOptions = {
-  crossOriginIsolated: true,
-
-  headers: new HttpHeaders({ 
-    'Content-Type': 'application/json',
-    'charset': 'UTF-8'
-    })
-};
+import { AppSettings } from '../shared/appsettings';
 
 @Injectable({
     providedIn: 'root'
   })
 export class ChatService {
   constructor(private http: HttpClient) { }
-  
+
+  serviceName = 'chat'
 
   send(googleAuth: GoogleAuth) : Observable<GoogleAuth>{
-    return this.http.post<GoogleAuth>('http://127.0.0.1:5000/chat/send-auth', googleAuth).pipe();
+    return this.http.post<GoogleAuth>(AppSettings.getEndpointWithService(this.serviceName)+'send-auth', googleAuth).pipe();
   }
 
-  // converse(message: string) : Observable<any>{
-  //   return this.http.post('http://127.0.0.1:5000/chat/conversation', {userid:'1', message: message }, httpOptions).pipe();
-  // }
   converse(message: string) : Promise<any>{ 
-    var msgObject = { userid:'1', message: message };
-
+    var msgObject = { userid:'1', message: message };   
     return fetch(
-      'http://127.0.0.1:5000/chat/conversation', // the url you are trying to access
+      AppSettings.getEndpointWithService(this.serviceName)+'conversation', // the url you are trying to access
       {
         method: 'POST', // GET, POST, PUT, DELETE
         credentials: 'include',
@@ -43,13 +32,9 @@ export class ChatService {
     ).then(value => value.json());
   }
 
-  // authorize() : Observable<any>{
-  //    return this.http.get('http://127.0.0.1:5000/chat/authorize');
-  // }
- 
   authorize(): Promise<any> {
       return fetch(
-        'http://127.0.0.1:5000/chat/authorize', // the url you are trying to access
+        AppSettings.getEndpointWithService(this.serviceName)+'authorize', // the url you are trying to access
         {
           method: 'GET', // GET, POST, PUT, DELETE
           credentials: 'include'
@@ -60,7 +45,7 @@ export class ChatService {
     var body = { userid:'1', script_id: scriptID };
 
     return fetch(
-      'http://127.0.0.1:5000/chat/setActiveScriptId', // the url you are trying to access
+      AppSettings.getEndpointWithService(this.serviceName)+'set-active-script-id', // the url you are trying to access
       {
         method: 'POST', // GET, POST, PUT, DELETE
         credentials: 'include',
@@ -72,13 +57,19 @@ export class ChatService {
     ).then(value => value.json());
   }
 
-  // isSignedIn(): Observable<any>{
-  //   return this.http.get('http://127.0.0.1:5000/chat/signed-in').pipe();
-  // } 
+  getActiveScriptId() : Promise<any> {
+    return fetch(
+      AppSettings.getEndpointWithService(this.serviceName)+'get-active-script-id', // the url you are trying to access
+      {
+        method: 'GET', // GET, POST, PUT, DELETE
+        credentials: 'include',
+      },
+    ).then(value => value.json());
+  }
 
   isSignedIn(): Promise<any>{
       return fetch(
-        'http://127.0.0.1:5000/chat/signed-in', // the url you are trying to access
+        AppSettings.getEndpointWithService(this.serviceName)+'signed-in', // the url you are trying to access
         {
           method: 'GET',
           credentials: 'include'
