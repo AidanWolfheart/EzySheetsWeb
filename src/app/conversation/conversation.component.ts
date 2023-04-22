@@ -79,15 +79,20 @@ export class ConversationComponent implements OnInit{
 
   getActiveScriptId() : any {
     this.chatService.getActiveScriptId().then(
-      response=>
+      response =>
       {
-        return response;
+        return response.scriptId;
       }
     );
   }
 
   setActiveScriptId() {
     this.activeScriptId = this.registerUsername?.value;
-    this.chatService.sendActiveScriptId(this.activeScriptId);
+    this.chatService.sendActiveScriptId(this.activeScriptId).then(
+      response => 
+      {
+        console.log(response);
+      }
+    )
   }
 }
