@@ -29,11 +29,7 @@ export class ConversationComponent implements OnInit{
     this.conversation.controls['response'].disable();
     this.activeScriptId = "No active Scripts right now";
 
-    var scriptId = this.getActiveScriptId();
-
-    if(scriptId !== ''){
-      this.activeScriptId = scriptId;
-    }
+    this.getActiveScriptId();
   }
 
   send(conversation: any) {
@@ -46,7 +42,11 @@ export class ConversationComponent implements OnInit{
         this.messages.pop()
         this.handleAIResponse(response, true)
       }
-    );
+    )
+    .catch(error => {
+      console.log(error);
+      window.location.reload();
+    });
   }
 
   handleUserRequest(response: any, isReply: boolean) {
@@ -81,6 +81,10 @@ export class ConversationComponent implements OnInit{
     this.chatService.getActiveScriptId().then(
       response =>
       {
+        if (response.scriptId !== ''){
+          this.activeScriptId = response.scriptId;
+        }
+
         return response.scriptId;
       }
     );
